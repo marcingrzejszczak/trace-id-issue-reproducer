@@ -10,6 +10,10 @@
   <packaging>pom</packaging>
 
   <properties>
+    <jdk.version>1.8</jdk.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
     <spring.boot.version>2.0.0.M7</spring.boot.version>
     <spring.cloud.version>Finchley.M5</spring.cloud.version>
   </properties>
@@ -96,6 +100,20 @@
         </plugin>
       </plugins>
     </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin.version}</version>
+        <configuration>
+          <source>${jdk.version}</source>
+          <target>${jdk.version}</target>
+          <showDeprecation>true</showDeprecation>
+          <showWarnings>true</showWarnings>
+          <optimize>true</optimize>
+        </configuration>
+      </plugin>
+    </plugins>
 
   </build>
 
