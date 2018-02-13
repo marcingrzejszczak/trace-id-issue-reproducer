@@ -4,11 +4,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.sleuth.instrument.messaging.TraceChannelInterceptor;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.binding.BinderAwareChannelResolver;
+import org.springframework.cloud.stream.binding.MessageChannelConfigurer;
 import org.springframework.cloud.stream.messaging.Processor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.integration.channel.ChannelInterceptorAware;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.support.InterceptableChannel;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -43,12 +48,11 @@ public class Application {
         resolver.resolveDestination("notifications").send(message);
     }
 
-    @Scheduled(fixedRate = 15000, initialDelay = 10000)
+    //@Scheduled(fixedRate = 15000, initialDelay = 10000)
     void sendMessageToStaticDestination(){
         String messageContent = "static destination";
         logger.info("Sending '" + messageContent + "' ...");
         Message<String> message = MessageBuilder.withPayload(messageContent).build();
         output.send(message);
     }
-
 }
